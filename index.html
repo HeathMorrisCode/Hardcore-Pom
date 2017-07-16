@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hardcore Pom</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" integrity="sha256-fDZ6wHbmob72H9d6oq3P6/F3Hc+wHBjdi6FTsUvvQjs=" crossorigin="anonymous" />
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+	<div id="app" class="container" style="margin-top:50px">
+		<div class="row">
+			<div class="col align-self-start"></div>
+			<div class="col-md-auto align-self-center">
+				<div class="card" style="min-width:200px;">
+					<div class="card-block">
+						<h3 class="card-title">Hardcore Pom</h3>
+
+						<div class="btn-group">
+							<button type="button" class="btn btn-danger btn-sm" :disabled="pomRunning" @click="startPom()" >Pom</button>
+							<button type="button" class="btn btn-danger btn-sm dropdown-toggle dropdown-toggle-split" :disabled="pomRunning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<div class="dropdown-menu" style="min-width: 2rem; left:initial;right:0px;">
+
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="pomTime" name="pomTime" id="pom15" value="15">
+									<label class="form-check-label radio-label" for="pom15">15</label>
+								</div>
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="pomTime" name="pomTime" id="pom20" value="20">
+									<label class="form-check-label radio-label" for="pom20">20</label>
+								</div>
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="pomTime" name="pomTime" id="pom25" value="25" checked>
+									<label class="form-check-label radio-label" for="pom25">25</label>
+								</div>
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="pomTime" name="pomTime" id="pom30" value="30">
+									<label class="form-check-label radio-label" for="pom30">30</label>
+								</div>
+
+
+								<div class="dropdown-divider"></div>
+
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="pomTime" name="pomTime" id="pom45" value="45">
+									<label class="form-check-label radio-label" for="pom45">45</label>
+								</div>
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="pomTime" name="pomTime" id="pom60" value="60">
+									<label class="form-check-label radio-label" for="pom60">60</label>
+								</div>
+								
+							</div>
+						</div>
+
+
+
+						<div class="btn-group float-right">
+							<button type="button" class="btn btn-primary btn-sm" :disabled="breakRunning" @click="startBreak()" >Break</button>
+							<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm" :disabled="breakRunning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<div class="dropdown-menu" style="min-width: 2rem; left:initial;right:0px;">
+
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="breakTime" name="breakTime" id="break5" value="5" checked>
+									<label style="padding-left: .9rem;" class="form-check-label radio-label" for="break5">5</label>
+								</div>
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="breakTime" name="breakTime" id="break10" value="10" checked>
+									<label class="form-check-label radio-label" for="break10">10</label>
+								</div>
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="breakTime" name="breakTime" id="break15" value="15" checked>
+									<label class="form-check-label radio-label" for="break15">15</label>
+								</div>
+								<div class="dropdown-divider"></div>
+								<div class="form-check radio-wrap">
+									<input class="form-check-input" type="radio" v-model.number="breakTime" name="breakTime" id="break20" value="20" checked>
+									<label class="form-check-label radio-label" for="break20">20</label>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+					<div class="card-block" style="padding-top:0px;">
+						<div class="progress progress-dark">
+							<div class="progress-bar progress-bar-striped" role="progressbar" :class="{ 'progress-bar-animated': pomRunning, 'bg-danger': !breakRunning}" :style="progressStyle" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+								<span v-if="breakRunning" style="padding:5px;">{{ humanBreakTime() }}</span>
+								<span v-else style="padding:5px;">{{ humanPomTime() }}</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="col align-self-end"></div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.js" integrity="sha256-jVfFb7AbGi7S/SLNl8SB4/MYaf549eEs+NlIWMoARHg=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.js" integrity="sha256-O80B9+k8kADyLffStFEQZnTxAU91ZryGbUeKwxO0t3M=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.1/vue.js" integrity="sha256-l3HI3R1oKGQtQMbtZCCHV1MqEsyoCtiMYku8/Z/TpzA=" crossorigin="anonymous"></script>
+	<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+body {
+  background: black;
+}
+.radio-wrap {
+  margin-bottom: initial;
+}
+.radio-label {
+  -margin-left: .5rem;
+  -margin-right: .5rem;
+  -padding-left: inherit;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+input[type="radio"] {
+  visibility: hidden;
+}
+.progress-dark {
+  background-color: black;
+  -background-color: #636c72;
+}
+input:checked + label {
+  font-weight: bold;
+  text-decoration: underline;
+}
+button:disabled {
+  cursor: default !important;
+}
+button {
+  cursor: pointer !important;
+}
